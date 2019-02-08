@@ -34,5 +34,25 @@ public class QueensBoard{
         if(board[i][j] == -1){
           counter ++;}}}
     return counter;}
-  
+  public static boolean nQueensH(int r, int c){
+    int startOff = 0;
+    if(count(-1) == board.length){
+      return true;}
+    if(r >= board.length && c >= board.length){
+      return false;}
+    if(r >= board.length){
+      while(startOff < board.length && board[startOff][c - 1] != -1){
+        startOff ++;}
+      edit(startOff, c - 1, false);
+      return nQueensH(startOff + 1, c - 1);}
+    if(board[r][c] == 0){
+      edit(r, c, true);
+      return nQueensH(0, c  + 1);}
+    return nQueensH(r + 1, c);}
+
+  public static boolean nQueens(int n){
+    if(n == 2 || n == 3){
+      return false;}
+    board = new int[n][n];
+    return nQueensH(0, 0);}
 }
