@@ -2,7 +2,7 @@ public class QueensBoard{
   private int[][] board;
   public QueensBoard(int n){
     board = new int[n][n];}
-  public static void edit(int r, int c, boolean add){
+  public  void edit(int r, int c, boolean add){
     int output = -1;
     if(add){
       output = 1;}
@@ -26,4 +26,13 @@ public class QueensBoard{
     if(add){
       board[r][c] = -1;}
       }
+
+  public int count(){
+    int counter = 0;
+    for(int i = 0; i < board.length; i++){
+      for(int j = 0; j < board.length; j++){
+        if(board[i][j] == -1){
+          counter ++;}}}
+    return counter;}
+  
 }
