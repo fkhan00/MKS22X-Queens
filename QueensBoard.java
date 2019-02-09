@@ -34,16 +34,32 @@ public class QueensBoard{
         if(board[i][j] == -1){
           counter ++;}}}
     return counter;}
-  public int countSolutions(){
-    return countSolutionsH(0, 0, 0);
-  }
-  public int countSolutionsH(int r, int c, int counter){
-    if(r == board.length && c == board.length){
-      return counter;}
-    if(r == board.length){
-      return countSolutions(0, c + 1, counter);}
-    if(solveH(r, c)){
-      return countSolutions(r + 1, c, counter += 1);}}
+    public int countSolutions(){
+       return countSolutionsH(0, 0, 0, 0);
+     }
+     public int find(int r, int c){
+       for(int i = 0; i < board.length; i++){
+         if(board[i][c] == -1){
+           return i;}}
+      return -1;}
+     public int countSolutionsH(int r, int c, int counter, int startOff){
+       if(count() == board.length){
+         edit(startOff, c - 1, false);
+         System.out.println(counter);
+         return countSolutionsH(startOff + 1, c - 1, counter += 1, find(r, c-2));
+       }
+       if(board[board.length - 1][0] == -1){
+         return counter;}
+       if(r >= board.length){
+         edit(startOff, c - 1, false);
+         if(c >= 2){
+           return countSolutionsH(startOff + 1, c - 1, counter, find(r, c - 2));}
+         if(c == 1){
+           return countSolutionsH(startOff + 1, 0, counter, 0);}}
+       if(board[r][c] == 0){
+         edit(r, c, true);
+         return countSolutionsH(0, c  + 1, counter, r);}
+       return countSolutionsH(r + 1, c, counter, startOff);}
 
   public boolean solveH(int r, int c){
     int startOff = 0;
