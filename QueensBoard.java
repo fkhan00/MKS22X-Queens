@@ -44,48 +44,73 @@ public class QueensBoard{
       return -1;}
      public int countSolutionsH(int r, int c, int counter, int startOff){
        if(count() == board.length){
-         edit(startOff, c - 1, false);
-         System.out.println(counter);
-         return countSolutionsH(startOff + 1, c - 1, counter += 1, find(r, c-2));
+         // if all queens
+         edit(startOff, c-1, false);
+         // remove queens in last and previous column
+         // move queen down one in previous column
+         try{
+         return countSolutionsH(startOff + 1, c - 1, counter += 1, find(r, c-2));}
+         catch(StackOverflowError e){
+           return countSolutionsH(startOff + 1, c - 1, counter += 1, find(r, c-2));
+         }
        }
-       if(board[board.length - 1][0] == -1){
+       if(r == board.length && c == 0){
          return counter;}
        if(r >= board.length){
+         // if can't add queen to column
          edit(startOff, c - 1, false);
+         // clear previous column
+         //try adding to next row of that column
          if(c >= 2){
            return countSolutionsH(startOff + 1, c - 1, counter, find(r, c - 2));}
+
          if(c == 1){
            return countSolutionsH(startOff + 1, 0, counter, 0);}}
        if(board[r][c] == 0){
+         // if no intersections add queen
          edit(r, c, true);
          return countSolutionsH(0, c  + 1, counter, r);}
        return countSolutionsH(r + 1, c, counter, startOff);}
 
   public boolean solveH(int r, int c){
+    // records queen position of previous column
     int startOff = 0;
     if(count() == board.length){
+      // if all queens are on board return true
       return true;}
-    if(r >= board.length && c >= board.length){
+    if(c >= board.length){
+      // if end is reached an no queens
       return false;}
     if(r >= board.length){
+      // if you can't place a queen on this column
       while(startOff < board.length && board[startOff][c - 1] != -1){
+        // find the position of the queen in the last column
         startOff ++;}
+        // remove that queen
       edit(startOff, c - 1, false);
+      // try putting a queen directly below previous position
       return solveH(startOff + 1, c - 1);}
     if(board[r][c] == 0){
+      // if no intersections in queens' paths
       edit(r, c, true);
+      // add queen and move to next column
       return solveH(0, c  + 1);}
+      // else try adding queen in next row
     return solveH(r + 1, c);}
 
   public boolean solve(){
-    if(board.length == 2 || board.length == 3){
-      return false;}
     return solveH(0, 0);}
+
   public String toString(){
     String output = "";
     for(int i = 0; i < board.length; i++){
       for(int j = 0; j < board.length; j++){
-        output += " " + board[i][j];
+        if(board[i][j] == -1){
+          output += " Q ";
+        }
+        else{
+          output += " _ ";
+        }
       }
       output += "\n";
     }
