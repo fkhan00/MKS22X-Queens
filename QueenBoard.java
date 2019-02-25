@@ -79,6 +79,10 @@ public class QueenBoard{
     return solveH(r + 1, c, placed);}
 
   public boolean solve(){
+    for(int i = 0; i < board.length; i++){
+      for(int j = 0; j < board.length; j++){
+        if(board[i][j] != 0){
+          throw new IllegalArgumentException("please enter an empty board and try again");}}}
     return solveH(0, 0, 0);}
 
   public String toString(){
