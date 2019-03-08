@@ -58,12 +58,17 @@ public class QueenBoard{
     if(c >= board.length){
       // if all queens are on board return true
       return true;}
+    // go through column
     for(int i = 0; i < board.length; i++){
+      // if can put queen do so
       if(board[i][c] == 0){
         edit(i, c, true);
+      // advance to next column
       if(solveH(c + 1)){
         return true;}
+      // if it doesn't work out go back and try underneath
        edit(i, c, false);}}
+      // if all attempts don't work return false
     return false;}
 
   public boolean solve(){
