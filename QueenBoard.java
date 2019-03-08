@@ -53,38 +53,25 @@ public class QueenBoard{
         edit(i, c, false);}}
   }
 
-  public boolean solveH(int r, int c, int placed){
+  public boolean solveH(int c){
     // records queen position of previous column
-    int startOff = 0;
-    if(placed == board.length){
+    if(c >= board.length){
       // if all queens are on board return true
       return true;}
-    if(c >= board.length){
-      // if end is reached an no queens
-      return false;}
-    if(r >= board.length){
-      // if you can't place a queen on this column
-      while(startOff < board.length && board[startOff][c - 1] != -1){
-        // find the position of the queen in the last column
-        startOff ++;}
-        // remove that queen
-      edit(startOff, c - 1, false);
-      // try putting a queen directly below previous position
-      return solveH(startOff + 1, c - 1, placed - 1);}
-    if(board[r][c] == 0){
-      // if no intersections in queens' paths
-      edit(r, c, true);
-      // add queen and move to next column
-      return solveH(0, c  + 1, placed + 1);}
-      // else try adding queen in next row
-    return solveH(r + 1, c, placed);}
+    for(int i = 0; i < board.length; i++){
+      if(board[i][c] == 0){
+        edit(i, c, true);
+      if(solveH(c + 1)){
+        return true;}
+       edit(i, c, false);}}
+    return false;}
 
   public boolean solve(){
     for(int i = 0; i < board.length; i++){
       for(int j = 0; j < board.length; j++){
         if(board[i][j] != 0){
           throw new IllegalArgumentException("please enter an empty board and try again");}}}
-    return solveH(0, 0, 0);}
+    return solveH( 0);}
 
   public String toString(){
     String output = "";
