@@ -37,6 +37,7 @@ public class QueenBoard{
           throw new IllegalArgumentException("please enter an empty board and try again");}}}
     countSolutionsH(0);
     return counter;}
+
   public void countSolutionsH(int c){
     // if you reached end of board add one
     if(c == board.length){
